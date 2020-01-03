@@ -1,11 +1,19 @@
 import React from "react";
-import ApolloClient from "apollo-boost";
+import { ApolloClient } from "apollo-client";
+import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "react-apollo";
-import "./App.css";
+import { createUploadLink } from "apollo-upload-client";
 import CreateAgent from "./components/CreateAgent";
 
-const client = new ApolloClient({
+import "./App.css";
+
+const link = createUploadLink({
   uri: "http://localhost:4000"
+});
+
+const client = new ApolloClient({
+  link,
+  cache: new InMemoryCache()
 });
 
 function App() {
