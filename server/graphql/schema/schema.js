@@ -8,7 +8,7 @@ const schema = gql`
     phone: String
     address: String
     zipCode: String
-    files: [String!]
+    filesUrl: String
   }
 
   input AgentInput {
@@ -17,7 +17,7 @@ const schema = gql`
     phone: String
     address: String
     zipCode: String
-    files: [String!]
+    files: [Upload]
   }
 
   type Query {

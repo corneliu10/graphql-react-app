@@ -7,7 +7,7 @@ const CREATE_AGENT = gql`
     $phone: String
     $address: String
     $zipCode: String
-    $files: [String!]
+    $files: [Upload]
   ) {
     createAgent(
       agentInput: {
@@ -24,7 +24,6 @@ const CREATE_AGENT = gql`
       phone
       address
       zipCode
-      files
     }
   }
 `;

@@ -16,6 +16,9 @@ const Agent = db.define("agent", {
   },
   zipCode: {
     type: Sequelize.STRING
+  },
+  filesUrl: {
+    type: Sequelize.STRING
   }
 });
 

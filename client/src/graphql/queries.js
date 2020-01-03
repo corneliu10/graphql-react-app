@@ -8,7 +8,7 @@ const AGENTS_QUERY = gql`
       phone
       address
       zipCode
-      files
+      filesUrl
     }
   }
 `;

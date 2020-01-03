@@ -19,7 +19,8 @@ export class CreateAgent extends Component {
             name: "",
             phone: "",
             address: "",
-            zipCode: ""
+            zipCode: "",
+            files: null
           }}
           validationSchema={agentSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -33,6 +34,7 @@ export class CreateAgent extends Component {
             errors,
             handleChange,
             isSubmitting,
+            setFieldValue,
             values //: { name, email, phone, address, zipCode }
           }) => (
             <Form>
@@ -87,11 +89,15 @@ export class CreateAgent extends Component {
                 />
               </div>
               <Fragment>
-                <Dropzone onDrop={files => console.log(files)}>
+                <Dropzone
+                  onDrop={files => {
+                    setFieldValue("files", files);
+                  }}
+                >
                   {({ getRootProps, getInputProps }) => (
                     <section>
                       <div {...getRootProps()}>
-                        {/* <input {...getInputProps()} /> */}
+                        <input {...getInputProps()} />
                         <p>
                           Drag 'n' drop some files here, or click to select
                           files
