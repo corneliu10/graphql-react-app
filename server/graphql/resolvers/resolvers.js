@@ -1,50 +1,47 @@
-var agents = [
-  {
-    id: 1,
-    name: "Agent1",
-    email: "agent1@gmail.com",
-    phone: "(123) 456-7899",
-    address: "Wall Street",
-    zipCode: "004433"
-  },
-  {
-    id: 2,
-    name: "Agent2",
-    email: "agent2@gmail.com",
-    phone: "(123) 456-7899",
-    address: "Wall Street 2",
-    zipCode: "003",
-    files: ["./file1", "./file2"]
-  }
-];
-
-var idCount = 3;
+const db = require("../../config/database");
+const Agent = require("../../models/Agent");
 
 const resolvers = {
   Query: {
-    agent: (_, { id }) => {
-      return agents.find(a => a.id === parseInt(id, 10));
+    agent: async (_, { id }) => {
+      const agent = await Agent.findAll({
+        where: {
+          id
+        }
+      });
+
+      if (!agent || agent.length === 0) {
+        return null; //agent not found;
+      }
+
+      return agent[0].dataValues;
     },
-    agents: () => agents
+    agents: () =>
+      Agent.findAll()
+        .then(agents => agents)
+        .catch(err => {
+          throw err;
+        })
   },
   Mutation: {
-    createAgent: (
+    createAgent: async (
       _,
       { agentInput: { name, email, phone, address, zipCode, files } }
     ) => {
-      const agent = {
-        idCount,
-        name,
-        email,
-        phone,
-        address,
-        zipCode,
-        files
-      };
+      try {
+        const agent = await Agent.create({
+          name,
+          email,
+          phone,
+          address,
+          zipCode,
+          files
+        });
 
-      idCount++;
-      agents.push(agent);
-      return agent;
+        return agent;
+      } catch (error) {
+        throw error;
+      }
     }
   }
 };
