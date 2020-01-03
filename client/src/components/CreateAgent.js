@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Mutation } from "react-apollo";
 import { Formik, Form } from "formik";
-import agentSchema from "../utils/validation";
 import { TextField } from "@material-ui/core";
+import Dropzone from "react-dropzone";
+
+import agentSchema from "../utils/validation";
 import CREATE_AGENT from "../graphql/mutations";
 
 import "./CreateAgent.css";
@@ -84,6 +86,21 @@ export class CreateAgent extends Component {
                   error={errors.zipCode !== undefined}
                 />
               </div>
+              <Fragment>
+                <Dropzone onDrop={files => console.log(files)}>
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div {...getRootProps()}>
+                        {/* <input {...getInputProps()} /> */}
+                        <p>
+                          Drag 'n' drop some files here, or click to select
+                          files
+                        </p>
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+              </Fragment>
 
               <Mutation mutation={CREATE_AGENT} variables={values}>
                 {agentMutation => (
