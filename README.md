@@ -31,6 +31,7 @@ npm test
 
 # Next steps
 
+- improve client UI
 - move static files to `Amazon S3`
 - refactor code
 - deploy to `Amazon EB` or `Heroku`
