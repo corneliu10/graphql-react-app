@@ -4,23 +4,24 @@ const schema = gql`
   type Agent {
     id: ID!
     name: String!
-    email: String
+    email: String!
     phone: String
     address: String
-    zipCode: Int
+    zipCode: String
     files: [String!]
   }
 
   input AgentInput {
     name: String!
-    email: String
+    email: String!
     phone: String
     address: String
-    zipCode: Int
+    zipCode: String
     files: [String!]
   }
 
   type Query {
+    agent(id: ID!): Agent
     agents: [Agent]
   }
 

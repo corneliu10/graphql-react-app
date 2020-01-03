@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
-import { Query, Mutation } from "react-apollo";
-import CreateAgent from "./CreateAgent";
+import { Query } from "react-apollo";
 
 const QUERY = gql`
   query {
@@ -11,24 +10,23 @@ const QUERY = gql`
   }
 `;
 
-export class Form extends Component {
+export class ListAgents extends Component {
   render() {
     return (
       <div>
-        <CreateAgent />
-        {/* <Query query={QUERY}>
+        <Query query={QUERY}>
           {({ loading, error, data }) => {
             if (loading) return <h4>Loading...</h4>;
-            if (error) console.log(error);
+            if (error) throw error;
 
             return data.books.map(b => {
               return <h1 key={b.title}>{b.title}</h1>;
             });
           }}
-        </Query> */}
+        </Query>
       </div>
     );
   }
 }
 
-export default Form;
+export default ListAgents;

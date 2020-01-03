@@ -1,56 +1,104 @@
 import React, { Component } from "react";
-import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import { Formik, Form } from "formik";
+import agentSchema from "../utils/validation";
+import { TextField } from "@material-ui/core";
+import CREATE_AGENT from "../graphql/mutations";
 
-const CREATE_AGENT = gql`
-  mutation AgentMutation(
-    $name: String!
-    $email: String
-    $phone: String
-    $address: String
-    $zipCode: Int
-    $files: [String!]
-  ) {
-    createAgent(
-      agentInput: {
-        name: $name
-        email: $email
-        phone: $phone
-        address: $address
-        zipCode: $zipCode
-        files: $files
-      }
-    ) {
-      name
-    }
-  }
-`;
+import "./CreateAgent.css";
 
 export class CreateAgent extends Component {
-  state = {
-    name: "",
-    email: ""
-  };
-
   render() {
-    const { name, email } = this.state;
     return (
       <div>
-        <input
-          type="text"
-          value={name}
-          onChange={e => this.setState({ name: e.target.value })}
-          placeholder="Name"
-        />
-        <input
-          type="text"
-          value={email}
-          onChange={e => this.setState({ email: e.target.value })}
-          placeholder="Email"
-        />
-        <Mutation mutation={CREATE_AGENT} variables={{ name, email }}>
-          {agentMutation => <button onClick={agentMutation}>Submit</button>}
-        </Mutation>
+        <Formik
+          initialValues={{
+            email: "",
+            name: "",
+            phone: "",
+            address: "",
+            zipCode: ""
+          }}
+          validationSchema={agentSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {({
+            errors,
+            handleChange,
+            isSubmitting,
+            values //: { name, email, phone, address, zipCode }
+          }) => (
+            <Form>
+              <div>
+                <TextField
+                  className="field"
+                  name="email"
+                  label="Email"
+                  onChange={handleChange}
+                  placeholder="Email"
+                  error={errors.email !== undefined}
+                />
+              </div>
+              <div>
+                <TextField
+                  className="field"
+                  name="name"
+                  label="Name"
+                  placeholder="Name"
+                  onChange={handleChange}
+                  error={errors.name !== undefined}
+                />
+              </div>
+              <div>
+                <TextField
+                  className="field"
+                  name="phone"
+                  label="Phone Number"
+                  placeholder="Phone Number"
+                  onChange={handleChange}
+                  error={errors.phone !== undefined}
+                />
+              </div>
+              <div>
+                <TextField
+                  className="field"
+                  name="address"
+                  label="Address"
+                  placeholder="Address"
+                  onChange={handleChange}
+                  error={errors.address !== undefined}
+                />
+              </div>
+              <div>
+                <TextField
+                  className="field"
+                  name="zipCode"
+                  label="Zip Code"
+                  placeholder="Zip Code"
+                  onChange={handleChange}
+                  error={errors.zipCode !== undefined}
+                />
+              </div>
+
+              <Mutation mutation={CREATE_AGENT} variables={values}>
+                {agentMutation => (
+                  <button
+                    onClick={agentMutation}
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    Submit
+                  </button>
+                )}
+              </Mutation>
+            </Form>
+          )}
+        </Formik>
       </div>
     );
   }
