@@ -34,12 +34,7 @@ function CreateAgent() {
           }, 400);
         }}
       >
-        {({
-          errors,
-          isSubmitting,
-          setFieldValue,
-          values //: { name, email, phone, address, zipCode }
-        }) => (
+        {({ errors, isSubmitting, setFieldValue, values, touched }) => (
           <Form>
             <Field
               type="email"
@@ -82,10 +77,7 @@ function CreateAgent() {
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     {values.files ? (
-                      <List
-                        component="nav"
-                        aria-label="secondary mailbox folders"
-                      >
+                      <List component="nav" aria-label="secondary folders">
                         {values.files.map((file, index) => (
                           <ListItem key={index}>
                             <ListItemText primary={file.name} />
@@ -109,7 +101,11 @@ function CreateAgent() {
                   color={
                     Object.keys(errors).length > 0 ? "secondary" : "primary"
                   }
-                  onClick={agentMutation}
+                  onClick={e =>
+                    Object.keys(errors).length === 0 &&
+                    Object.keys(touched).length > 0 &&
+                    agentMutation(e)
+                  }
                   type="submit"
                   disabled={isSubmitting}
                 >
