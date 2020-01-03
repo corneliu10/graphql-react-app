@@ -5,7 +5,7 @@ const agentSchema = object({
   email: string()
     .email()
     .required(),
-  phone: string(), //.matches("([0-9]{3}) [0-9]{3}-[0-9]{4}"),
+  phone: string().matches(/^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/),
   address: string(),
   zipCode: string()
 });

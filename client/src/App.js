@@ -3,9 +3,9 @@ import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "react-apollo";
 import { createUploadLink } from "apollo-upload-client";
-import CreateAgent from "./components/CreateAgent";
 
 import "./App.css";
+import AgentForm from "./components/AgentForm";
 
 const link = createUploadLink({
   uri: "http://localhost:4000"
@@ -21,7 +21,7 @@ function App() {
     <ApolloProvider client={client}>
       <div className="App">
         <h1>RentZend</h1>
-        <CreateAgent />
+        <AgentForm />
       </div>
     </ApolloProvider>
   );

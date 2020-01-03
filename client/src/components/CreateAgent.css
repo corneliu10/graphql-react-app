@@ -1,4 +1,17 @@
+.container {
+  justify-content: center;
+  text-align: center;
+}
+
 .field {
-  padding: 2rem;
-  margin: 4rem;
+  margin: 2rem 0rem;
+  width: 70%;
+}
+
+.dropzone {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
