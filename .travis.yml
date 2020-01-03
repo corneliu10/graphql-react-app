@@ -1,3 +1,5 @@
 language: node_js
-before_script:
+node_js:
+  - node
+before_install:
   - npm run install-dev
